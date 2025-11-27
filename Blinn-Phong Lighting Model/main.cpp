@@ -2,6 +2,8 @@
 #include"glad/glad.h"
 #include"GLFW/glfw3.h"
 
+#include"Shader.h"
+
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
@@ -12,7 +14,8 @@ const char* vertexShaderSource = R"glsl(
 
     void main()
     {
-        gl_Position = vec4(aPos, 1.0);
+        gl_Position = 
+vec4(aPos, 1.0);
     }
 )glsl";
 
@@ -89,7 +92,9 @@ int main() {
 	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
 	glEnable(GL_DEPTH_TEST);
 
-    unsigned int vs = compileShader(vertexShaderSource, GL_VERTEX_SHADER);
+	Shader shaderProgram("vertexShader.vert", "fragmentShader.frag");
+
+    /*unsigned int vs = compileShader(vertexShaderSource, GL_VERTEX_SHADER);
     unsigned int fs = compileShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
 
     unsigned int shaderProgram = glCreateProgram();
@@ -99,7 +104,7 @@ int main() {
     glLinkProgram(shaderProgram);
 
     glDeleteShader(vs);
-    glDeleteShader(fs);
+    glDeleteShader(fs);*/
 
     unsigned int VAO, VBO, EBO;
     glGenVertexArrays(1, &VAO);
@@ -120,7 +125,7 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    glUseProgram(shaderProgram);
+	shaderProgram.use();
 
 
 
@@ -146,7 +151,7 @@ int main() {
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
-    glDeleteProgram(shaderProgram);
+    
 
     glfwTerminate();
 
