@@ -94,17 +94,7 @@ int main() {
 
 	Shader shaderProgram("vertexShader.vert", "fragmentShader.frag");
 
-    /*unsigned int vs = compileShader(vertexShaderSource, GL_VERTEX_SHADER);
-    unsigned int fs = compileShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
-
-    unsigned int shaderProgram = glCreateProgram();
     
-    glAttachShader(shaderProgram, vs);
-    glAttachShader(shaderProgram, fs);
-    glLinkProgram(shaderProgram);
-
-    glDeleteShader(vs);
-    glDeleteShader(fs);*/
 
     unsigned int VAO, VBO, EBO;
     glGenVertexArrays(1, &VAO);
