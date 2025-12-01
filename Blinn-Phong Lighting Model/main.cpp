@@ -10,14 +10,15 @@ const unsigned int SCR_HEIGHT = 600;
 
 
 float vertices[] = {
-    -0.5f, -0.5f, -0.5f,
-     0.5f, -0.5f, -0.5f,
-     0.5f,  0.5f, -0.5f,
-    -0.5f,  0.5f, -0.5f,
-    -0.5f, -0.5f,  0.5f,
-     0.5f, -0.5f,  0.5f,
-     0.5f,  0.5f,  0.5f,
-    -0.5f,  0.5f,  0.5f
+	// vertices          // normals
+	-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
+	 0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
+	 0.5f,  0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
+	-0.5f,  0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
+	-0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 };
 
 
@@ -108,6 +109,8 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	    shaderProgram.use();
+
+
 
         mat4 projection = mat4::perspective(
             radians(45.0f),                       // fov
