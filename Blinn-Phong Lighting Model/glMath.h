@@ -13,6 +13,10 @@ struct vec3 {
 
 	vec3(float x_ = 0.0f, float y_ = 0.0f, float z_ = 0.0f) :x(x_), y(y_), z(z_) {}
 
+	const float* ptr() const {
+		return &x; // Returns the memory address of the first component
+	}
+
 	friend std::ostream& operator<<(std::ostream& os, const vec3& v) {
 		os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
 		return os;

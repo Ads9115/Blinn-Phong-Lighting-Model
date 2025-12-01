@@ -3,6 +3,7 @@
 #include"GLFW/glfw3.h"
 
 #include"Shader.h"
+#include"glMath.h"
 
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
@@ -93,7 +94,6 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-	shaderProgram.use();
 
 
 
@@ -107,6 +107,32 @@ int main() {
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	    shaderProgram.use();
+
+        mat4 projection = mat4::perspective(
+            radians(45.0f),                       // fov
+            (float)SCR_WIDTH / (float)SCR_HEIGHT, // aspect
+            0.1f,                                 // zNear
+            100.0f                                // zFar
+        );
+
+        // 2. View (lookAt)
+        mat4 view = mat4::lookAt(
+            vec3(0.0f, 1.0f, 4.0f),  // eye
+            vec3(0.0f, 0.0f, 0.0f),  // center
+            vec3(0.0f, 1.0f, 0.0f)   // up
+        );
+
+        // 3. Model (rotate)
+        mat4 model = mat4::identity();
+        model = model * mat4::rotate(
+            radians((float)glfwGetTime() * 30.0f),
+            vec3(0.0f, 1.0f, 0.0f)
+        );
+
+        shaderProgram.setMat4("model", model);
+        shaderProgram.setMat4("view", view);
+        shaderProgram.setMat4("projection", projection);
 
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
