@@ -89,7 +89,7 @@ int main() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
@@ -112,6 +112,17 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	    shaderProgram.use();
+
+
+        vec3 lightPos(1.2f, 1.0f, 2.0f);
+        vec3 viewPos(0.0f, 0.0f, 3.0f);   
+        vec3 lightColor(1.0f, 1.0f, 1.0f);
+        vec3 objectColor(0.6f, 0.2f, 0.7f);
+
+		shaderProgram.setVec3("lightPos", lightPos);
+		shaderProgram.setVec3("viewPos", viewPos);
+		shaderProgram.setVec3("lightColor", lightColor);
+		shaderProgram.setVec3("objectColor", objectColor);
 
 
 
