@@ -10,15 +10,52 @@ const unsigned int SCR_HEIGHT = 600;
 
 
 float vertices[] = {
-	// vertices          // normals
-	-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-	 0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-	 0.5f,  0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-	-0.5f,  0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-	-0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
-	 0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
-	-0.5f,  0.5f,  0.5f, 0.0f, 0.0f, 1.0f
+     -0.5f, -0.5f, -0.5f,   0.0f,  0.0f, -1.0f,
+     0.5f,  0.5f, -0.5f,   0.0f,  0.0f, -1.0f,
+     0.5f, -0.5f, -0.5f,   0.0f,  0.0f, -1.0f,
+     0.5f,  0.5f, -0.5f,   0.0f,  0.0f, -1.0f,
+    -0.5f, -0.5f, -0.5f,   0.0f,  0.0f, -1.0f,
+    -0.5f,  0.5f, -0.5f,   0.0f,  0.0f, -1.0f,
+
+    // front face (z = 0.5) normal (0,0,1)
+    -0.5f, -0.5f,  0.5f,   0.0f,  0.0f,  1.0f,
+     0.5f, -0.5f,  0.5f,   0.0f,  0.0f,  1.0f,
+     0.5f,  0.5f,  0.5f,   0.0f,  0.0f,  1.0f,
+     0.5f,  0.5f,  0.5f,   0.0f,  0.0f,  1.0f,
+    -0.5f,  0.5f,  0.5f,   0.0f,  0.0f,  1.0f,
+    -0.5f, -0.5f,  0.5f,   0.0f,  0.0f,  1.0f,
+
+    // left face (x = -0.5) normal (-1,0,0)
+    -0.5f,  0.5f,  0.5f,  -1.0f,  0.0f,  0.0f,
+    -0.5f,  0.5f, -0.5f,  -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f,  -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f,  -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f,  0.5f,  -1.0f,  0.0f,  0.0f,
+    -0.5f,  0.5f,  0.5f,  -1.0f,  0.0f,  0.0f,
+
+    // right face (x = 0.5) normal (1,0,0)
+     0.5f,  0.5f,  0.5f,   1.0f,  0.0f,  0.0f,
+     0.5f, -0.5f, -0.5f,   1.0f,  0.0f,  0.0f,
+     0.5f,  0.5f, -0.5f,   1.0f,  0.0f,  0.0f,
+     0.5f, -0.5f, -0.5f,   1.0f,  0.0f,  0.0f,
+     0.5f,  0.5f,  0.5f,   1.0f,  0.0f,  0.0f,
+     0.5f, -0.5f,  0.5f,   1.0f,  0.0f,  0.0f,
+
+     // top face (y = 0.5) normal (0,1,0)
+     -0.5f,  0.5f, -0.5f,   0.0f,  1.0f,  0.0f,
+      0.5f,  0.5f, -0.5f,   0.0f,  1.0f,  0.0f,
+      0.5f,  0.5f,  0.5f,   0.0f,  1.0f,  0.0f,
+      0.5f,  0.5f,  0.5f,   0.0f,  1.0f,  0.0f,
+     -0.5f,  0.5f,  0.5f,   0.0f,  1.0f,  0.0f,
+     -0.5f,  0.5f, -0.5f,   0.0f,  1.0f,  0.0f,
+
+     // bottom face (y = -0.5) normal (0,-1,0)
+     -0.5f, -0.5f, -0.5f,   0.0f, -1.0f,  0.0f,
+      0.5f, -0.5f,  0.5f,   0.0f, -1.0f,  0.0f,
+      0.5f, -0.5f, -0.5f,   0.0f, -1.0f,  0.0f,
+      0.5f, -0.5f,  0.5f,   0.0f, -1.0f,  0.0f,
+     -0.5f, -0.5f, -0.5f,   0.0f, -1.0f,  0.0f,
+     -0.5f, -0.5f,  0.5f,   0.0f, -1.0f,  0.0f
 };
 
 
@@ -76,18 +113,17 @@ int main() {
 
     
 
-    unsigned int VAO, VBO, EBO;
+    unsigned int VAO, VBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
+    
 
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
@@ -109,15 +145,15 @@ int main() {
 			glfwSetWindowShouldClose(window, true);
 
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	    shaderProgram.use();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	    shaderProgram.use();
 
-
+		// lighting uniforms
         vec3 lightPos(1.2f, 1.0f, 2.0f);
-        vec3 viewPos(0.0f, 0.0f, 3.0f);   
+        vec3 viewPos(0.0f, 1.0f, 4.0f);   
         vec3 lightColor(1.0f, 1.0f, 1.0f);
-        vec3 objectColor(0.6f, 0.2f, 0.7f);
+        vec3 objectColor(0.9f, 0.3f, 0.3f);
 
 		shaderProgram.setVec3("lightPos", lightPos);
 		shaderProgram.setVec3("viewPos", viewPos);
@@ -125,19 +161,19 @@ int main() {
 		shaderProgram.setVec3("objectColor", objectColor);
 
 
-
+		//transformation matrices uniforms
         mat4 projection = mat4::perspective(
-            radians(45.0f),                       // fov
-            (float)SCR_WIDTH / (float)SCR_HEIGHT, // aspect
-            0.1f,                                 // zNear
-            100.0f                                // zFar
+            radians(45.0f),                       
+            (float)SCR_WIDTH / (float)SCR_HEIGHT, 
+            0.1f,                                 
+            100.0f                                
         );
 
         // 2. View (lookAt)
         mat4 view = mat4::lookAt(
-            vec3(0.0f, 1.0f, 4.0f),  // eye
-            vec3(0.0f, 0.0f, 0.0f),  // center
-            vec3(0.0f, 1.0f, 0.0f)   // up
+            vec3(0.0f, 1.0f, 4.0f),  
+            vec3(0.0f, 0.0f, 0.0f),  
+            vec3(0.0f, 1.0f, 0.0f)   
         );
 
         // 3. Model (rotate)
@@ -152,7 +188,7 @@ int main() {
         shaderProgram.setMat4("projection", projection);
 
         glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -161,7 +197,7 @@ int main() {
 
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
+    
     
 
     glfwTerminate();
