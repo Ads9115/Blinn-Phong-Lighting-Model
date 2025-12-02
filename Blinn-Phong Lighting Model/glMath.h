@@ -11,7 +11,11 @@ struct vec3 {
 
 	float x, y, z;
 
-	vec3(float x_ = 0.0f, float y_ = 0.0f, float z_ = 0.0f) :x(x_), y(y_), z(z_) {}
+	vec3() :x(0.0f), y(0.0f), z(0.0f) {}
+
+	vec3(float x_, float y_, float z_) :x(x_), y(y_), z(z_) {}
+
+	vec3(float s) :x(s), y(s), z(s) {}
 
 	const float* ptr() const {
 		return &x; // Returns the memory address of the first component
@@ -129,6 +133,26 @@ struct mat4 {
 		return result;
 
 
+	}
+
+	static mat4 translate(const vec3& t) {
+
+		mat4 result = identity();
+
+		result.m[12] = t.x;
+		result.m[13] = t.y;
+		result.m[14] = t.z;
+
+		return result;
+
+	}
+
+	static mat4 scale(const vec3& s) {
+		mat4 scale_mat = identity();
+		scale_mat.m[0] = s.x;
+		scale_mat.m[5] = s.y;
+		scale_mat.m[10] = s.z;
+		return scale_mat;
 	}
 
 	static mat4 rotate(float angle_rad, const vec3& axis) {

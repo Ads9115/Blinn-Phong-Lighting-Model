@@ -32,6 +32,12 @@
     <None Include="fragmentShader.frag">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="lightVertex.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="lightFragment.frag">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">

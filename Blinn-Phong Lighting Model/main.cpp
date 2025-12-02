@@ -110,6 +110,7 @@ int main() {
 	glEnable(GL_DEPTH_TEST);
 
 	Shader shaderProgram("vertexShader.vert", "fragmentShader.frag");
+	Shader lightShader("lightVertex.vert", "lightFragment.frag");
 
     
 
@@ -134,7 +135,17 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
+    unsigned int lightVBO, lightVAO;
+	glGenVertexArrays(1, &lightVAO);
+    glGenBuffers(1, &lightVBO);
 
+    glBindVertexArray(lightVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, lightVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+    glBindVertexArray(0);
 
 
 
@@ -156,7 +167,7 @@ int main() {
             2.0f * sin(glfwGetTime())
         );
         vec3 viewPos(0.0f, 1.0f, 4.0f);   
-        vec3 lightColor(1.0f, 1.0f, 1.0f);
+        vec3 lightColor(1.0f, 0.0f, 0.0f);
         vec3 objectColor(0.9f, 0.3f, 0.3f);
 
 		shaderProgram.setVec3("lightPos", lightPos);
@@ -193,6 +204,22 @@ int main() {
 
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+        mat4 lightModel = mat4::identity();
+        lightModel = lightModel * mat4::translate(lightPos);
+        lightModel = lightModel * mat4::scale(vec3(0.2f));
+       
+        lightShader.use();
+		lightShader.setMat4("model", lightModel);
+		lightShader.setMat4("view", view);
+		lightShader.setMat4("projection", projection);
+		lightShader.setVec3("lightColor", lightColor);
+
+		glBindVertexArray(lightVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+         
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

@@ -134,6 +134,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="fragmentShader.frag" />
+    <None Include="lightFragment.frag" />
+    <None Include="lightVertex.vert" />
     <None Include="vertexShader.vert" />
   </ItemGroup>
   <ItemGroup>
