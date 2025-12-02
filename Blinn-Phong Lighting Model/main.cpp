@@ -150,7 +150,11 @@ int main() {
 
 
 		// lighting uniforms
-        vec3 lightPos(1.2f, 1.0f, 2.0f);
+        vec3 lightPos = vec3(
+            2.0f * cos(glfwGetTime()),
+            1.0f,
+            2.0f * sin(glfwGetTime())
+        );
         vec3 viewPos(0.0f, 1.0f, 4.0f);   
         vec3 lightColor(1.0f, 1.0f, 1.0f);
         vec3 objectColor(0.9f, 0.3f, 0.3f);
